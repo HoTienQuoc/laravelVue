@@ -10,6 +10,22 @@ use Illuminate\Support\Facades\Route;
 // })->middleware('auth:sanctum');//
 
 Route::prefix('v1')->group(function(){
+    Route::group([
+
+        'middleware' => 'api',
+        'prefix' => 'auth'
+
+    ], function () {
+
+        Route::post('login', 'AuthController@login');
+        Route::post('logout', 'AuthController@logout');
+        Route::post('refresh', 'AuthController@refresh');
+        Route::post('me', 'AuthController@me');
+
+    });
+
     Route::apiResource("/tasks", TaskController::class);
     Route::patch('/tasks/{task}/complete',CompleteTaskController::class);
 });
+
+
