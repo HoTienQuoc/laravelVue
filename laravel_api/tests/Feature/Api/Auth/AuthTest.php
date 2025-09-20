@@ -2,10 +2,11 @@
 
 namespace Tests\Feature\Api\Auth;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class AuthTest extends TestCase
 {
@@ -13,7 +14,9 @@ class AuthTest extends TestCase
 
     public function test_user_can_login_and_receive_token(): void
     {
-        $user = User::factory()->create();
+        $user = User::factory()->create([
+            'password' => Hash::make('password')
+        ]);
 
         $response = $this->postJson('/api/auth/login', [
             'email' => $user->email,
@@ -32,6 +35,7 @@ class AuthTest extends TestCase
             'email' => $user->email,
             'password' => 'wrong-passwrod',
         ]);
+
 
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['email']);
