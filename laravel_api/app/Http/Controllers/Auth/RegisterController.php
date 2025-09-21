@@ -8,18 +8,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\RegisterRequest;
-use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
     /**
      * Handle the incoming request.
      */
-    public function __invoke(RegisterRequest $request){
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
+    public function __invoke(RegisterRequest $request)
+    {
+        $user = User::create($request->only('name', 'email') + [
+            'password' => Hash::make($request->password)
         ]);
 
         Auth::login($user);
