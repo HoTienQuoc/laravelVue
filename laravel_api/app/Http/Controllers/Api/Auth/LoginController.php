@@ -29,7 +29,7 @@ class LoginController extends BaseController
         $user = User::where('email', $request->email)->first();
 
         $validPassword = $user && Hash::check($request->password, $user->password);
-        $token = $validPassword ? auth()->attempt($request->only('email', 'password')) : false;
+        $token = $validPassword ? Auth::attempt($request->only('email', 'password')) : false;
 
         if (!$validPassword || !$token) {
             throw ValidationException::withMessages([
@@ -39,7 +39,7 @@ class LoginController extends BaseController
 
         return response()->json([
             'token' => $this->respondWithToken($token),
-            'user' => auth()->user(),
+            'user' => Auth::user(),
         ], Response::HTTP_OK);
     }
 
@@ -48,7 +48,7 @@ class LoginController extends BaseController
      */
     public function refresh()
     {
-        $success = $this->respondWithToken(auth()->refresh());
+        $success = $this->respondWithToken(Auth::refresh());
 
         return $this->sendResponse($success, 'Refresh token returned successfully.');
     }
@@ -61,7 +61,7 @@ class LoginController extends BaseController
         return [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => Auth::factory()->getTTL() * 60,
         ];
     }
 }

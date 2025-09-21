@@ -5,8 +5,9 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Http\Requests\RegisterRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\RegisterRequest;
 use App\Http\Controllers\BaseController;
 use Illuminate\Validation\ValidationException;
 
@@ -29,7 +30,7 @@ class RegisterController extends BaseController
             'password' => Hash::make($request->password),
         ]);
 
-        $token = auth()->login($user);
+        $token = Auth::login($user);
 
         return response()->json([
             'token' => $this->respondWithToken($token),
@@ -42,7 +43,7 @@ class RegisterController extends BaseController
      */
     public function refresh()
     {
-        $success = $this->respondWithToken(auth()->refresh());
+        $success = $this->respondWithToken(Auth::refresh());
 
         return $this->sendResponse($success, 'Refresh token returned successfully.');
     }
@@ -55,7 +56,7 @@ class RegisterController extends BaseController
         return [
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60,
+            'expires_in' => Auth::factory()->getTTL() * 60,
         ];
     }
 }

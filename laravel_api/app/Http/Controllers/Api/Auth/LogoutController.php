@@ -31,7 +31,7 @@ class LogoutController extends BaseController
      */
     public function __invoke(Request $request)
     {
-        auth()->logout();
+        Auth::logout();
         return response()->noContent();
     }
 
@@ -42,7 +42,7 @@ class LogoutController extends BaseController
      */
     public function refresh()
     {
-        return $this->respondWithToken(auth()->refresh());
+        return $this->respondWithToken(Auth::refresh());
     }
 
     /**
@@ -57,7 +57,7 @@ class LogoutController extends BaseController
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => auth()->factory()->getTTL() * 60
+            'expires_in' => Auth::factory()->getTTL() * 60
         ]);
     }
 }
