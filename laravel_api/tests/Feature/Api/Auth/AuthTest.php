@@ -73,4 +73,24 @@ class AuthTest extends TestCase
         $response->assertStatus(422);
         $response->assertJsonValidationErrors(['name', 'email', 'password']);
     }
+
+    public function test_user_can_logout_and_token_is_revoked(): void
+    {
+        $user = User::factory()->create([
+            'password' => Hash::make('password')
+        ]);
+        $token = auth()->login($user);
+
+        $response = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->postJson('/api/auth/logout');
+
+        $response->assertNoContent();
+
+        $this->app['auth']->forgetGuards();
+
+        $protected = $this->withHeader('Authorization', 'Bearer ' . $token)
+            ->getJson('/api/user');
+
+        $protected->assertStatus(401);
+    }
 }
