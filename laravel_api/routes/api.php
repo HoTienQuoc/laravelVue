@@ -12,10 +12,11 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:api');
 
-Route::prefix('v1')->group(function(){
-    Route::apiResource("/tasks", TaskController::class);
-    Route::patch('/tasks/{task}/complete',CompleteTaskController::class);
-});
+Route::prefix('v1')->group(base_path('routes/api/v1.php'));
+
+Route::prefix('v2')
+    ->middleware('auth:sanctum')
+    ->group(base_path('routes/api/v2.php'));
 
 Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class);
@@ -24,19 +25,6 @@ Route::prefix('auth')->group(function () {
 });
 
 
-// Route::group([
-
-//     'middleware' => 'api',
-//     'prefix' => 'auth'
-
-// ], function () {
-
-//     Route::post('login', 'AuthController@login');
-//     Route::post('logout', 'AuthController@logout');
-//     Route::post('refresh', 'AuthController@refresh');
-//     Route::post('me', 'AuthController@me');
-
-// });
 
 
 

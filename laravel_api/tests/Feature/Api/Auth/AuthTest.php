@@ -4,6 +4,7 @@ namespace Tests\Feature\Api\Auth;
 
 use Tests\TestCase;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -79,7 +80,7 @@ class AuthTest extends TestCase
         $user = User::factory()->create([
             'password' => Hash::make('password')
         ]);
-        $token = auth()->login($user);
+        $token = Auth::login($user);
 
         $response = $this->withHeader('Authorization', 'Bearer ' . $token)
             ->postJson('/api/auth/logout');

@@ -16,15 +16,7 @@ class TaskController extends Controller
     public function index()
     {
         // return TaskResource::collection(Task::all()); //
-        return Task::all()->toResourceCollection();
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return request()->user()->tasks()->toResourceCollection();
     }
 
     /**
@@ -32,7 +24,7 @@ class TaskController extends Controller
      */
     public function store(StoreTaskRequest $request)
     {
-        $task = Task::create($request->validated());
+        $task = $request->user()->tasks()->create($request->validated());
         return $task->toResource();
     }
 
@@ -44,14 +36,6 @@ class TaskController extends Controller
         // return new TaskResource($task);//
         // return TaskResource::make($task);//
         return $task->toResource();
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Task $task)
-    {
-        //
     }
 
     /**

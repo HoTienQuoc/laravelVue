@@ -46,6 +46,15 @@ return [
             'driver' => 'jwt',
             'provider' => 'users',
         ],
+        'jwt' => [               // 👈 JWT guard
+            'driver' => 'jwt',
+            'provider' => 'users',
+        ],
+
+        'sanctum' => [           // 👈 Sanctum guard (uses token)
+            'driver' => 'sanctum',
+            'provider' => 'users',
+        ],
     ],
 
     /*
