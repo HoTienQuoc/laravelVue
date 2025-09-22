@@ -13,5 +13,8 @@ Route::apiResource('/tasks', TaskController::class)->names([
     'destroy' => 'tasks.v2.destroy',
 ]);
 
-Route::patch('/tasks/{task}/complete', CompleteTaskController::class)->name('tasks.v2.complete');
+Route::patch('/tasks/{task}/complete', CompleteTaskController::class)
+    ->name('tasks.v2.complete')
+    ->middleware('can:update,task');
+
 

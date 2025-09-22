@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V2;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\CompleteTaskRequest;
 
 class CompleteTaskController extends Controller
@@ -14,6 +15,11 @@ class CompleteTaskController extends Controller
      */
     public function __invoke(CompleteTaskRequest $request, Task $task)
     {
+        Gate::authorize('update', $task);
+
+        // if ($request->user()->cannot('update', $task)) {
+        //     abort(403);
+        // }
         $task->is_completed = $request->is_completed;
         $task->save();
 
