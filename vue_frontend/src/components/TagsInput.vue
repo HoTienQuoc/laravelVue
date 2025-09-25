@@ -1,4 +1,7 @@
 <template>
+    <!-- <div>
+        selected tags: {{ selectedTags }}
+    </div> -->
     <div class="tags-input-wrapper">
         <span class="tag-item" v-for="(tag, index) in tags" :key="index">
             {{ index }}:{{ tag }}:
@@ -14,10 +17,18 @@
 
 <script>
 export default {
-    data: () => ({
-        tags: ["vue", "react", "angular"],
-        newTag: ""
-    }),
+    data(){
+        return {
+            tags: [...this.selectedTags],
+            newTag: ""
+        }
+    },
+    props: {
+        selectedTags: {
+            type: Array,
+            default: ()=>[]
+        }
+    },
     watch: {
         newTag(newValue) {
             if (newValue.indexOf(",") > -1) {
