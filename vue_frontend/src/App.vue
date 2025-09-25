@@ -9,9 +9,8 @@
 
 <template>
   <h1>Hello World</h1>
-  <tags-input></tags-input>
+  <!-- <tags-input></tags-input> -->
   <tags-input/>
-  <TagsInput/>
 </template>
 
 <style>
