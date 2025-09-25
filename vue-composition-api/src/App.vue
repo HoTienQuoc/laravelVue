@@ -1,5 +1,5 @@
 <script>
-  import { ref, reactive } from 'vue';
+  import { ref, reactive, toRef, toRefs } from 'vue';
 
   export default {
     setup(){
@@ -19,13 +19,32 @@
         item.price = 30
       }
 
+      // const nameRef = toRef(item, 'name');
+      // console.log(nameRef.value);
+      // item.name = "New Product"
+      // console.log(nameRef.value);
+
+      // const itemRefs = toRefs(item);
+      // console.log('name:', itemRefs.name.value)
+      // console.log('price:', itemRefs.price.value)
+
+      // item.name="New Product";
+      // item.price=11;
+      // console.log('name:', itemRefs.name.value)
+      // console.log('price:', itemRefs.price.value)
+
+      const {name, price} = toRefs(item);
+
+
+
 
       return {
         message,
         quantity,
         increment,
         decrement,
-        item,
+        name,
+        price,
         swapProduct
       };
     }
@@ -33,7 +52,7 @@
 </script>
 
 <template>
-  <h1>{{ item.name }}:{{ item.price }}</h1>
+  <h1>{{ name }}:{{ price }}</h1>
   <button @click="swapProduct">Swap product</button>
   <h1>{{ message }}</h1>
   <input type="text" v-model="message"/>
