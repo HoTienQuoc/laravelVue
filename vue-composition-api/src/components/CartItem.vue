@@ -8,7 +8,10 @@
         required: true
       }
     },
-    setup(props){
+    emits:[
+      'remove'
+    ],
+    setup(props,{emit}){
       // console.log(props.cartItem)
       const item = reactive(props.cartItem)
 
@@ -19,10 +22,14 @@
 
       const {name, price, quantity} = toRefs(item);
 
+      const remove = () => emit("Remove",item)
+
+
       return {
         quantity,
         increment,
         decrement,
+        remove,
         name,
         price,
         quantity,
@@ -36,6 +43,8 @@
   <h1>{{ name }}:{{ price }}:{{ quantity }}</h1>
   <button @click="increment">+</button>
   <button @click="decrement">-</button>
+  <br>
+  <button @click="remove">remove</button>
   <h3>Total: {{ total }}</h3>
 </template>
 
