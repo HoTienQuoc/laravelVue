@@ -4,7 +4,7 @@
             class="d-flex justify-content-start align-items-center"
         >
             <input
-                class="form-check-input mt-0" :class="completedClass"
+                class="form-check-input mt-0" :class="completedClass" :checked="task.is_completed"
                 type="checkbox"
             />
             <div
