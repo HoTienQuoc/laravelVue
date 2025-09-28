@@ -10,7 +10,7 @@ use App\Http\Controllers\Api\V1\CompleteTaskController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
-})->middleware('auth:api');
+})->middleware('auth:sanctum');
 
 Route::prefix('v1')->group(base_path('routes/api/v1.php'));
 
@@ -21,7 +21,7 @@ Route::prefix('v2')
 Route::prefix('auth')->group(function () {
     Route::post('/login', LoginController::class);
     Route::post('/register', RegisterController::class);
-    Route::post('/logout', LogoutController::class)->middleware("auth:api");
+    Route::post('/logout', LogoutController::class)->middleware("auth:sanctum");
 });
 
 
